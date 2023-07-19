@@ -20,7 +20,6 @@ time, mark, audio, video {
 	padding: 0;
 	border: 0;
 	font-size: 100%;
-	font: inherit;
 	vertical-align: baseline;
 }
 /* HTML5 display-role reset for older browsers */
@@ -186,3 +185,39 @@ footer nav ul {
 	margin: 2em
 }
 
+.filters {
+	display: flex;
+	justify-content: center;
+	margin-bottom: 50px;
+
+}
+.box button {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: nowrap;
+	justify-content: center;
+}
+
+.box button {
+	border-radius: 60px;
+	border: 1px solid #1D6154;
+	color: #1D6154;
+	text-align: center;
+	font-size: 16px;
+	font-family: Syne;
+	font-style: normal;
+	font-weight: 700;
+	line-height: normal;
+	padding-top: 8px;
+	padding-bottom: 8px;
+	padding-left: 15px;
+	padding-right: 15px;
+	margin: 7px;
+	
+}
+
+.box button:hover,
+.box button.active{
+	background: #1D6154;
+	color: white;
+}
