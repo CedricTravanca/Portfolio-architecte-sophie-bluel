@@ -106,7 +106,7 @@ fetch("http://localhost:5678/api/categories")
 
     })
         
-// Récupération des travaux et mise au format Json
+// Récupération des travaux qui vont apparaitre sans avoir cliquer sur les boutons de tri
 fetch("http://localhost:5678/api/works")
     .then(response => response.json())
     .then (data => {
@@ -136,41 +136,6 @@ fetch("http://localhost:5678/api/works")
     })
 
 
-/* 
-// Récupération des travaux et mise au format Json
-fetch("http://localhost:5678/api/works")
-    .then(response => response.json())
-    .then (data => {
-
-        for(let line in data){
-            let object = data[line]
-            let categorie = object.category.name
-        //    console.log(categorie)
-
-       let trierObjets = document.getElementById("btn-objets")
-       trierObjets.addEventListener("click", function(){
-        
-        if (categorie === btnTrierObjets.innerText){
-            document.querySelector("img").innerHTML = ""
-            
-        //    console.log("okkkkkkk")
-        } else if 
-         (categorie === btnTrierAppartements.innerText)
-            console.log("ici les appartements")
-         /*else {
-        if (categorie === btnTrierHr.innerText){
-            console.log(object.title)
-        } 
-        
-        })
-        
-        
-    })
-    
-        }
-
-
- */
 
 
     
