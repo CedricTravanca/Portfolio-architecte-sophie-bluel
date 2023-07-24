@@ -1,31 +1,111 @@
-    const sectFiltre = document.querySelector(".filters") 
-
+// création boutton "tous"
+const sectFiltre = document.querySelector(".filters") 
 const btnTrierTous = document.createElement("button")
 btnTrierTous.innerText = "Tous"
 btnTrierTous.id = "btn-tous"
+btnTrierTous.value = "all"
 btnTrierTous.classList = "active"
 sectFiltre.appendChild(btnTrierTous)
 
-const btnTrierObjets = document.createElement("button")
-btnTrierObjets.innerText = "Objets"
-btnTrierObjets.id = "btn-objets"
-sectFiltre.appendChild(btnTrierObjets)
+// fonction pour charger les travaux 
+async function loadWorks() {
+    response = await fetch("http://localhost:5678/api/works")
+    works = await response.json()
+    return works
+}
 
-const btnTrierAppartements = document.createElement("button")
-btnTrierAppartements.innerText = "Appartements"
-btnTrierAppartements.id = "btn-appartements"
-sectFiltre.appendChild(btnTrierAppartements)
+// fonction pour charger les catégories
+async function loadCategories() {
+    response = await fetch("http://localhost:5678/api/categories")
+    categories = await response.json()
+    return categories
+}
+  
 
+//nous appelons les catégories via fetch afin de les utiliser pour nos filtres
+fetch("http://localhost:5678/api/categories")
+    .then(response => response.json())
+    .then (data => {
+        
+        // parcourir les catégories pour les associer aux boutons de tri
+        for(let id in data){
+            let category = data[id]
+            
+            //Création des boutons de tri via parcours de des infos des catégories appelées avec fetch 
+            let button = document.createElement("button")
+            button.value = category.id
+            button.textContent = category.name
+            //console.log(category.name)
 
+    
+            //Je place mes bouttons de filtres dans la div filters
+            let categories = document.querySelector(".filters")
+            categories.appendChild(button)
+        }
 
-const btnTrierHr = document.createElement("button")
-btnTrierHr.innerText = "Hôtels & restaurants"
-btnTrierHr.id = "btn-hr"
-sectFiltre.appendChild(btnTrierHr)
+        // application de css sur les bouttons de tri avec la fonction click
+        let filters = document.querySelectorAll(".filters button")
+        filters.forEach((filter)=> {
+            filter.addEventListener("click" , () => {
+                // désactivation/activation de la class "active"
+                filters.forEach((filter) => {
+                    filter.classList.remove("active")
+                })
+                filter.classList.add("active")
 
+                // Vider gallery
+                document.querySelector(".gallery").innerHTML = "";
+                
+                // Puis charger les travaux selon la catégorie cliquée
+                loadWorks().then(works => {
+                    for(let id in works){
+                        let work = works[id]
+                        if (filter.value == "all"){
+                            let figElement = document.createElement("figure")
 
+                            let imgElement = document.createElement("img")
+                            imgElement.src = work.imageUrl
+                            imgElement.alt = work.title
 
+                            let figCaptionElement = document.createElement("figCaption")
+                            figCaptionElement.textContent = work.title
 
+                            figElement.appendChild(imgElement)
+                            figElement.appendChild(figCaptionElement)
+
+                    //l'ensemble des éléments crées dans figElement vont être placés dans ma div gallery et se nommerons travaux
+                            let travaux = document.querySelector(".gallery")
+                            travaux.appendChild(figElement)
+
+                        } else {
+                            if (work.category.id == filter.value) {
+                                let figElement = document.createElement("figure")
+
+                                let imgElement = document.createElement("img")
+                                imgElement.src = work.imageUrl
+                                imgElement.alt = work.title
+
+                                let figCaptionElement = document.createElement("figCaption")
+                                figCaptionElement.textContent = work.title
+
+                                figElement.appendChild(imgElement)
+                                figElement.appendChild(figCaptionElement)
+
+                    //l'ensemble des éléments crées dans figElement vont être placés dans ma div gallery et se nommerons travaux
+                                let travaux = document.querySelector(".gallery")
+                                travaux.appendChild(figElement)
+                            }
+                        }
+                    }
+                    });
+                
+            })
+        })
+
+    // set active clicked button
+
+    })
+        
 // Récupération des travaux et mise au format Json
 fetch("http://localhost:5678/api/works")
     .then(response => response.json())
@@ -56,9 +136,7 @@ fetch("http://localhost:5678/api/works")
     })
 
 
-
-
-
+/* 
 // Récupération des travaux et mise au format Json
 fetch("http://localhost:5678/api/works")
     .then(response => response.json())
@@ -67,85 +145,35 @@ fetch("http://localhost:5678/api/works")
         for(let line in data){
             let object = data[line]
             let categorie = object.category.name
-//            console.log(categorie)
+        //    console.log(categorie)
 
        let trierObjets = document.getElementById("btn-objets")
        trierObjets.addEventListener("click", function(){
         
         if (categorie === btnTrierObjets.innerText){
-            console.log("ici les objets")
-        } else {
+            document.querySelector("img").innerHTML = ""
+            
+        //    console.log("okkkkkkk")
+        } else if 
          (categorie === btnTrierAppartements.innerText)
             console.log("ici les appartements")
-        } /*else {
+         /*else {
         if (categorie === btnTrierHr.innerText){
             console.log(object.title)
-        } */
+        } 
         
         })
         
-        /*
+        
     })
-    */ 
+    
         }
-        /* recuperation des différents boutons de filtres
-
-        let filterTous = document.getElementById("btn-tous")
-        let filterObjets = document.getElementById("btn-objets")
-        let filterAppartements = document.getElementById("btn-appartements")
-        let filterHotelsRestaurants = document.getElementById("btn-hr")
-        */
-       
-        let filters = document.querySelectorAll(".filters button")
-        
-        filters.forEach((filter)=> {
-            filter.addEventListener("click" , () => {
-                filters.forEach((filter) => {
-                    filter.classList.remove("active")
-                })
-                filter.classList.add("active")
-            })
-        })
-    })
 
 
- /*   //on parcours la liste des éléments id présents dans data
-let btnTrierTous = document.getElementById("btn-tous")
-        btnTrierTous.addEventListener("click",function(){
-        console.log("hop la")    
-        })
+ */
 
-*/
-  
 
     
-/*
-//nous appelons les catégories via fetch afin de les utiliser pour nos filtres
-fetch("http://localhost:5678/api/categories")
-    .then(response => response.json())
-    .then (data => {
-        console.log(data)
-        
-        for (let line= 0; line < data.length; line++){
-            let lines= data[line]
-            console.log(lines)
-            
-            let categorie = lines.name
-            console.log(categorie)
-            
-        }
-    })
-*/        
-
-//let travauxFilters = object.filter(function(element,id ){
-
-//console.log(element,id)
-//})
-//const filtercategories = 
-//const filtre = document.getElementById('btn-tous')
-//console.log(filtre)
 
 
- //   filtreTous.addEventListener("click", () => {
- //       console.log("voila")
- //  })
+
