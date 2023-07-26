@@ -102,8 +102,6 @@ fetch("http://localhost:5678/api/categories")
             })
         })
 
-    // set active clicked button
-
     })
         
 // Récupération des travaux qui vont apparaitre sans avoir cliquer sur les boutons de tri
@@ -134,11 +132,3 @@ fetch("http://localhost:5678/api/works")
         travaux.appendChild(figElement)
     }
     })
-
-
-
-
-    
-
-
-
