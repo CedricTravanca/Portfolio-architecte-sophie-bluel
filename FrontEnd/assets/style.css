@@ -98,6 +98,10 @@ nav li {
 li:hover {
 	color: #B1663C;
 }
+
+li a:hover {
+	color: #B1663C;
+}
 #introduction {
 	display: flex;
 	align-items: center;
@@ -221,6 +225,11 @@ footer nav ul {
 .box button.active{
 	background: #1D6154;
 	color: white;
+}
+
+a {
+	text-decoration: none;
+	color: black;
 }
 
 /* PAGE LOGIN */
