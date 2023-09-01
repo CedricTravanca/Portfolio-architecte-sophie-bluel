@@ -1,20 +1,22 @@
-let myMail = "cedric.travanca@gmail.com"
-let myPassword = "Ticketentree"
-
-function checkIt() {
+console.log("coucou")
+// On empêche le rechargement de la page
+let formulaire = document.getElementById("form")
+formulaire.addEventListener("submit", (event) => {
+    event.preventDefault()
     let user = document.getElementById("e-mail").value
     let password = document.getElementById("mot-de-passe").value
-
-// On empêche le rechargement de la page
-    let btnconnecter = document.getElementById("btn-submit")
-    btnconnecter.addEventListener("submit", (event) => {
-    event.preventDefault()
-    })
+    console.log(user, password)
     
-if (user == myMail && password == myPassword) {
-    console.log("Acces autorisé");
-} else {
-    console.log("E-mail ou mot de passe incorrecte");
-}
-}
+    fetch("http://localhost:5678/api/users/login",{
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            "email": user,
+            "password": password
+        })
+    })
+})
+
 

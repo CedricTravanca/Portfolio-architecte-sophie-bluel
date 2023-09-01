@@ -111,24 +111,24 @@ fetch("http://localhost:5678/api/works")
         console.log(data)
 
 //on parcours la liste des éléments id présents dans data
-    for(let id in data){
-        let object = data[id]
+        for(let id in data){
+            let object = data[id]
 
-//Création d'une balise figure qui contiendras l'image et sa description
-        let figElement = document.createElement("figure")
+    //Création d'une balise figure qui contiendras l'image et sa description
+            let figElement = document.createElement("figure")
 
-        let imgElement = document.createElement("img")
-        imgElement.src = object.imageUrl
-        imgElement.alt = object.title
+            let imgElement = document.createElement("img")
+            imgElement.src = object.imageUrl
+            imgElement.alt = object.title
 
-        let figCaptionElement = document.createElement("figCaption")
-        figCaptionElement.textContent = object.title
+            let figCaptionElement = document.createElement("figCaption")
+            figCaptionElement.textContent = object.title
 
-        figElement.appendChild(imgElement)
-        figElement.appendChild(figCaptionElement)
+            figElement.appendChild(imgElement)
+            figElement.appendChild(figCaptionElement)
 
-//l'ensemble des éléments crées dans figElement vont être placés dans ma div gallery et se nommerons travaux
-        let travaux = document.querySelector(".gallery")
-        travaux.appendChild(figElement)
-    }
+    //l'ensemble des éléments crées dans figElement vont être placés dans ma div gallery et se nommerons travaux
+            let travaux = document.querySelector(".gallery")
+            travaux.appendChild(figElement)
+        }
     })
