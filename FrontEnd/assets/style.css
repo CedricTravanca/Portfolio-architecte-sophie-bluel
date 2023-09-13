@@ -278,6 +278,18 @@ body, html {
 	max-width: calc(100vw - 20px);
 	max-height: calc(100vh - 20px);
 	overflow: auto;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	gap: 15px;
+}
+
+.modal-content h1 {
+	color: black;
+	font-family: work sans;
+	size: 26px;
+	font-weight: 400;
 }
 
 .modal {

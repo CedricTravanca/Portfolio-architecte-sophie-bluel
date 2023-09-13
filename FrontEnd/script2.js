@@ -26,27 +26,29 @@ formulaire.addEventListener("submit", (event) => {
     console.log(response)
     response.json().then((data)=>{
         console.log(data)
+        
         if(data.token != null){
             localStorage.setItem("tokenIdentification",data.token)
             window.location.href = "http://127.0.0.1:5500" 
             
-            let barreNoireMofifier = document.querySelector("barreNoireMofifier")
-            barreNoireMofifier.classlist
+            const openModal = function(e) {
+                e.preventDefault()
+                const target = document.querySelector(e.target.getAttribute("href"))
+                target.style.display = null
+                target.setAttribute("aria-modal", "true")
+                target.removeAttribute("aria-hidden")
+            }
             
-        }else {
+            let clickModal = document.querySelector(".js-modal")
+            clickModal.addEventListener("click",openModal)
+            }
+            
+            
+        else {
             alert ("Identifiant ou mot de passe incorrect")
         }
 
     })
 })
-    
 
-    //
-
- /*   if (response.ok) {
-        document.location.href='http://127.0.0.1:5500/'
-
-    } else {
-        throw new Error("Identifiant ou Mot de passe incorrect")
-    }*/
 })
