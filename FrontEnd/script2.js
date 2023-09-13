@@ -31,18 +31,50 @@ formulaire.addEventListener("submit", (event) => {
             localStorage.setItem("tokenIdentification",data.token)
             window.location.href = "http://127.0.0.1:5500" 
             
+            headband = document.querySelector(".black-headband")
+            headband.style.display = "flex"
+
+            let modal = null
+
             const openModal = function(e) {
                 e.preventDefault()
                 const target = document.querySelector(e.target.getAttribute("href"))
                 target.style.display = null
                 target.setAttribute("aria-modal", "true")
                 target.removeAttribute("aria-hidden")
+                modal = target
+                modal.addEventListener("click", closeModal)
+                modal.querySelector(".js-modal-close").addEventListener("click", closeModal)
+                modal.querySelector(".js-modal-stop").addEventListener("click", closeModal)
             }
             
+            const closeModal = function(e) {
+                if (modal === null) return
+                e.preventDefault()
+                modal.style.display = "none"
+                modal.setAttribute("aria-hidden", "true")
+                modal.removeAttribute("aria-modal")
+                modal.removeEventListener("click", closeModal)
+                modal.querySelector(".js-modal-close").removeEventListener("click", closeModal)
+                modal.querySelector(".js-modal-stop").removeEventListener("click", stopPropagation)
+                modal = null
+            }
+
+            const stopPropagation = function (e) {
+                e.stopPropagation()
+            }
+
             let clickModal = document.querySelector(".js-modal")
             clickModal.addEventListener("click",openModal)
+            
+            window.addEventListener("keydown", function (e) {
+                if (e.key === "Escape" || e.key === "Esc"){
+                    closeModal(e)
+                }
+            })
             }
             
+          
             
         else {
             alert ("Identifiant ou mot de passe incorrect")

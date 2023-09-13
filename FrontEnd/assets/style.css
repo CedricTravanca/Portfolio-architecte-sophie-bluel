@@ -265,13 +265,10 @@ span {
 
 /* PAGE MODAL ********************************** */
 
-body, html {
-	margin:0;
-	padding:0;
-}
+
 * {box-sizing: border-box;}
 
-.modal-content{
+.modal-content {
 	background-color: #FFF;
 	padding: 20px;
 	width: 600px;
@@ -290,6 +287,14 @@ body, html {
 	font-family: work sans;
 	size: 26px;
 	font-weight: 400;
+}
+
+button.js-modal-close {
+	display: flex;
+	justify-content: end;
+	align-items: end;
+	justify-items: end;
+	align-content: end;
 }
 
 .modal {
