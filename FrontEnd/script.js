@@ -147,9 +147,12 @@ fetch("http://localhost:5678/api/works")
 
 headband = document.querySelector(".black-headband")
 headband.style.display = "none"
-console.log(isConnect)
 
-if (isConnect = true) {
+btnModif = document.getElementById("open-modal")
+btnModif.style.display = "none"
+
+if (isConnect == true) {
+    console.log("connecté")
     /*showLogout = document.getElementById("login")
     showLogout.textContent = "logout"
     logoutId = document.getElementById("login")
@@ -158,18 +161,15 @@ if (isConnect = true) {
     deleteTokenStorage.addEventListener("click",localStorage.setItem("tokenIdentification", data.token))
     */
     headband.style.display = "flex"
-    btnModif = document.getElementById("open-modal")
     btnModif.style.display = "inline-block"
     filters = document.querySelector(".filters")
     filters.style.display = "none"
 
 }
 
-if (isConnect = false) {
-    console.log(isConnect)
-    boutonEdition = document.querySelector(".button-edition")
-    boutonEdition.style.color = "red"
-    headband.style.background = "red"
+if (isConnect == false) {
+    console.log("déconnecté")
+    btnModif.style.display = "none"
 }
 
 let modal = null

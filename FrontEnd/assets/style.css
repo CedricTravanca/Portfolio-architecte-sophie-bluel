@@ -256,7 +256,7 @@ a {
 }
 
 span {
-	display: none;
+	display:inline-block;
 	font-size: medium;
 	color: black;
 	font-weight: normal;
