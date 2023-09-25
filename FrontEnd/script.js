@@ -3,11 +3,12 @@ let isConnect = false
 console.log(isConnect)
 
 // si le token n'est pas vide, nous pouvons acceder à la page
-if (localStorage.getItem("tokenIdentification") != "null") {
+console.log(localStorage.getItem("tokenIdentification"))
+if (localStorage.getItem("tokenIdentification") != null) {
     //   window.location.href = "http://127.0.0.1:5500"
     isConnect = true
     console.log(isConnect)
-} 
+}
 
 // création boutton "tous"
 const sectFiltre = document.querySelector(".filters")
@@ -135,6 +136,7 @@ fetch("http://localhost:5678/api/works")
             let figCaptionElement = document.createElement("figCaption")
             figCaptionElement.textContent = object.title
 
+
             figElement.appendChild(imgElement)
             figElement.appendChild(figCaptionElement)
 
@@ -151,23 +153,28 @@ headband.style.display = "none"
 btnModif = document.getElementById("open-modal")
 btnModif.style.display = "none"
 
+btnOpenModal2 = document.getElementById("modal2")
+btnOpenModal2.style.display = "none"
+
+
 if (isConnect == true) {
     console.log("connecté")
-    /*showLogout = document.getElementById("login")
+    showLogout = document.getElementById("login")
     showLogout.textContent = "logout"
     logoutId = document.getElementById("login")
     logoutId.id = "logout"
     deleteTokenStorage = document.getElementById("logout")
-    deleteTokenStorage.addEventListener("click",localStorage.setItem("tokenIdentification", data.token))
-    */
+    deleteTokenStorage.addEventListener("click", function () {
+        localStorage.removeItem("tokenIdentification")
+        window.location.href = "http://127.0.0.1:5500/index.html"
+    })
+
     headband.style.display = "flex"
     btnModif.style.display = "inline-block"
     filters = document.querySelector(".filters")
     filters.style.display = "none"
 
-}
-
-if (isConnect == false) {
+} else {
     console.log("déconnecté")
     btnModif.style.display = "none"
 }
@@ -207,3 +214,78 @@ window.addEventListener("keydown", function (e) {
     }
 })
 
+let modal2 = null
+
+const openModal2 = function (e) {
+    e.preventDefault()
+    const target = document.querySelector(e.target.getAttribute("href"))
+    target.style.display = null
+    target.setAttribute("aria-modal", "true")
+    target.removeAttribute("aria-hidden")
+    modal2 = target
+    modal2.querySelector(".js-modal-close").addEventListener("click", closeModal2)
+}
+
+const closeModal2 = function (e) {
+    if (modal === null) return
+    e.preventDefault()
+    modal2.style.display = "none"
+    modal2.setAttribute("aria-hidden", "true")
+    modal2.removeAttribute("aria-modal")
+    modal2.querySelector(".js-modal-close").removeEventListener("click", closeModal2)
+    modal2 = null
+}
+
+let clickModal2 = document.getElementById("open-modal2")
+clickModal2.addEventListener("click", openModal2)
+
+let backToModal = document.querySelector(".fa-arrow-left")
+backToModal.addEventListener("click",closeModal2)
+
+window.addEventListener("keydown", function (e) {
+    if (e.key === "Escape" || e.key === "Esc") {
+        closeModal2(e)
+    }
+})
+
+
+
+function deleteImg() {
+    console.log("voila")
+}
+
+fetch("http://localhost:5678/api/works")
+    .then(response => response.json())
+    .then(data => {
+
+        //on parcours la liste des éléments id présents dans data
+        for (let id in data) {
+            let object = data[id]
+
+            //Création d'une balise figure qui contiendras l'image et sa description
+            let figElement = document.createElement("figure")
+
+            let imgElement = document.createElement("img")
+            imgElement.src = object.imageUrl
+            imgElement.alt = object.title
+
+            //Création bouton poubelle sur les photos de la modal
+            let poubelle = document.createElement('i')
+
+            poubelle.className = "fa-solid fa-trash-can"
+            figElement.appendChild(poubelle)
+            poubelle.addEventListener("click", function (event) {
+                deleteImg(event)
+            })
+
+            let figCaptionElement = document.createElement("figCaption")
+            figCaptionElement.textContent = object.title
+
+            figElement.appendChild(imgElement)
+
+            //l'ensemble des éléments crées dans figElement vont être placés dans la div modal-img et se nommerons travaux
+            let travaux = document.querySelector(".modal-img")
+            travaux.appendChild(figElement)
+
+        }
+    })

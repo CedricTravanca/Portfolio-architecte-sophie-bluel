@@ -20,7 +20,36 @@
 		<div class="modal-content js-modal-stop">
 			<button class="js-modal-close"><i class="fa-solid fa-xmark"></i></button>
 			<h1>Galerie photo</h1>
-				<p>Spare me your space age technobabble, Attila the Hun! It's okay, Bender. I like cooking too. Fry! Stay back! He's too powerful! Shut up and take my money! Say it in Russian! Oh, you're a dollar naughtier than most.</p>
+			<div class="modal-img"></div>
+			<hr class="bordure">
+			<button class="add-img"><a href="#modal2" id="open-modal2">Ajouter une photo</a></button>
+		</div>
+	</aside >
+
+	<aside id="modal2" class="modal" aria-hidden="true" role="dialog" style= "display:none;">
+		<div class="modal-content js-modal-stop">
+			<div class="btn-modal2">
+				<button class="js-modal2-back"><a href="#modal1"><i class="fa-solid fa-arrow-left"></i></a></button>
+				<button class="js-modal-close"><i class="fa-solid fa-xmark"></i></button>
+			</div>
+			<h1>Ajout photo</h1>
+			<form method="post" action="" id="form">
+				<div class="choose-picture">
+					<i class="fa-regular fa-image"></i>
+					<input type="file" class="upload-picture" name="photo" id="id-input" style="display:none">
+					<button type="button" class="upload-picture" id="#id-input">+ Ajouter photo</button>
+					<p>jpg, png : 4mo max</p>
+				</div>
+				<div class="formulaire-modal2">
+					<label for="Titre">Titre</label>
+					<input type="text" name="Titre" id="Titre" autofocus required>
+				</div>
+				<div class="formulaire-modal2">
+						<label for="categorie">Catégorie</label>
+						<input type="select" name="categorie" id="categorie" required>
+				</div>
+				<hr class="bordure-ajout-img">
+				<button class="add-img-valider"><a href="">Valider</a></button>
 		</div>
 	</aside>
 <header>
@@ -47,7 +76,7 @@
 		</article>
 	</section>
 	<section id="portfolio">
-		<h2>Mes Projets  <span><a href="#modal1" id="open-modal" class="js-modal"><i class="fa-regular fa-pen-to-square"></i>Modifier</a></span></h2>
+		<h2>Mes Projets<span><a href="#modal1" id="open-modal" class="js-modal"><i class="fa-regular fa-pen-to-square"></i>Modifier</a></span></h2>
 		<div class="filters box">
 		</div>
 		<div class="gallery"></div>
@@ -57,12 +86,12 @@
 		<p>Vous avez un projet ? Discutons-en !</p>
 		<form action="#" method="post">
 			<label for="name">Nom</label>
-			<input type="text" name="name" id="name">
+			<input type="text" class="champ-contact" name="name" id="name">
 			<label for="email">Email</label>
-			<input type="email" name="email" id="email">
+			<input type="email" class="champ-contact" name="email" id="email">
 			<label for="message">Message</label>
 			<textarea name="message" id="message" cols="30" rows="10"></textarea>
-			<input type="submit" value="Envoyer">
+			<input class="btn-contact-valider" type="submit" value="Envoyer">
 		</form>
 	</section>
 </main>

@@ -30,6 +30,7 @@ formulaire.addEventListener("submit", (event) => {
             if (data.token != null) {
                 localStorage.setItem("tokenIdentification", data.token)
                 window.location.href = "http://127.0.0.1:5500"
+                console.log(data.token)
             }
             else {
                 alert("Identifiant ou mot de passe incorrect")
