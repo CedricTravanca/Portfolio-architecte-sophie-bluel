@@ -325,6 +325,7 @@ span {
 	grid-template-columns: 5, 30px;
 	grid-template-rows: 3, 40px;
 	max-width: 100%;
+	position:relative;
 }
 
 .modal-img img {
@@ -365,6 +366,8 @@ button.js-modal-close {
 	width: 100%;
 	height: 100%;
 	background: rgba(0, 0, 0, 0.3);
+	top:0;
+	right: 0;
 }
 
 hr {
@@ -407,8 +410,13 @@ button.add-img a{
 
 .fa-trash-can {
 	position: absolute;
-	top: 180px;
-
+	top: 5px;
+	right: 5px;
+	z-index: 2;
+	background-color: black;
+	color: white;
+	padding:3px;
+	font-size: 8px;
 }
 
 .btn-modal2 {
@@ -457,6 +465,9 @@ button.add-img a{
 	border:none;
 	background-color: #d1d1d1;
 	color: #2d6580;
+	display:flex;
+	justify-content: center;
+	align-items: center;
 }
 
 .formulaire label {
@@ -477,6 +488,13 @@ button.add-img a{
 
 .bordure-ajout-img {
 	width: 380px;
+}
+
+.fa-chevron-down{
+	position: absolute;
+	left:670px;
+	bottom: 200px;
+
 }
 
 .add-img-valider {

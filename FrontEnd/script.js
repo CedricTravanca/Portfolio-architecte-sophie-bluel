@@ -248,10 +248,30 @@ window.addEventListener("keydown", function (e) {
     }
 })
 
+chevronCategories = document.querySelector(".fa-chevron-down")
+chevronCategories.addEventListener("click", function (){
+    console.log("chevron")
+    
+    fetch("http://localhost:5678/api/categories")
+    .then(response => response.json())
+    .then(data => {
+    for (let id in data) {
+    let category = data[id]
+    console.log(category.name)
+    }
+})
+})
 
 
-function deleteImg() {
-    console.log("voila")
+function deleteImg(event) {
+    console.log(event.target.id)
+    fetch(`http://localhost:5678/api/works/${event.target.id}`,{
+        method: `DELETE`, 
+        headers: {"Authorization": "Bearer "+localStorage.getItem("tokenIdentification")},      
+    })
+    document.querySelector(".modal-img").innerHTML = "";
+    document.querySelector(".gallery").innerHTML = "";
+
 }
 
 fetch("http://localhost:5678/api/works")
@@ -273,9 +293,12 @@ fetch("http://localhost:5678/api/works")
             let poubelle = document.createElement('i')
 
             poubelle.className = "fa-solid fa-trash-can"
+            poubelle.id = object.id
+        
+            
             figElement.appendChild(poubelle)
-            poubelle.addEventListener("click", function (event) {
-                deleteImg(event)
+            poubelle.addEventListener("click",function (event) {
+               deleteImg(event)
             })
 
             let figCaptionElement = document.createElement("figCaption")
