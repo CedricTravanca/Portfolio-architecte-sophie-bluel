@@ -258,9 +258,18 @@ chevronCategories.addEventListener("click", function (){
     for (let id in data) {
     let category = data[id]
     console.log(category.name)
-    }
+    
+let options = document.createElement("option")
+
+    options.textContent = category.name
+    options.innerHtml = category.name
+    console.log("ok")
+    inputCategorie = document.getElementById("categorie")
+    inputCategorie.appendChild(option)
+}})
+
 })
-})
+
 
 
 function deleteImg(event) {
@@ -271,10 +280,15 @@ function deleteImg(event) {
     })
     document.querySelector(".modal-img").innerHTML = "";
     document.querySelector(".gallery").innerHTML = "";
-
+    loadWorks()
+    loadImgModal()
 }
 
-fetch("http://localhost:5678/api/works")
+
+loadImgModal()
+
+async function loadImgModal() {
+    response = await fetch("http://localhost:5678/api/works")
     .then(response => response.json())
     .then(data => {
 
@@ -295,7 +309,7 @@ fetch("http://localhost:5678/api/works")
             poubelle.className = "fa-solid fa-trash-can"
             poubelle.id = object.id
         
-            
+            //fonction deleteImg pour le click sur la corbeille
             figElement.appendChild(poubelle)
             poubelle.addEventListener("click",function (event) {
                deleteImg(event)
@@ -312,3 +326,4 @@ fetch("http://localhost:5678/api/works")
 
         }
     })
+}
