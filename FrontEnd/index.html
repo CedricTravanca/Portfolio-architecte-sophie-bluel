@@ -42,14 +42,16 @@
 				</div>
 				<div class="formulaire-modal2">
 					<label for="Titre">Titre</label>
-					<input type="text" name="Titre" id="Titre" autofocus required>
+					<input type="text" name="Titre" id="titre" autofocus required>
 				</div>
 				<div class="formulaire-modal2">
 						<label for="categorie">Catégorie</label>
-						<input type="select" name="categorie" id="categorie" required><i class="fa-solid fa-chevron-down"></i>
+						<select name="categorie" id="categorie" required>
+							<option value=""></option>
+						</select>
 				</div>
 				<hr class="bordure-ajout-img">
-				<button class="add-img-valider"><a href="">Valider</a></button>
+				<input type="submit" value="Valider" id="valider-nouvelle-img" class="add-img-valider"></input>
 		</div>
 	</aside>
 <header>

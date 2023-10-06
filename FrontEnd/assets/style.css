@@ -519,17 +519,24 @@ button.add-img a{
 	height: 36px;
 }
 
-.add-img-valider a {
-	color:white;
-}
-
 .formulaire-modal2 input {
 	width: 379px;
 	height: 51px;
 	background: #FFF;
 	box-shadow: 0px 4px 14px 0px rgba(0, 0, 0, 0.09);
 	border: none;
-	font-size: 14px;
+	font-size: 16px;
+	font-family: work sans;
+	margin-top: 10px;
+}
+
+.formulaire-modal2 select{
+	width: 379px;
+	height: 51px;
+	background: #FFF;
+	box-shadow: 0px 4px 14px 0px rgba(0, 0, 0, 0.09);
+	border: none;
+	font-size: 16px;
 	font-family: work sans;
 	margin-top: 10px;
 }
@@ -538,6 +545,10 @@ button.add-img a{
 	display: flex;
 	flex-direction: column;
 	margin-bottom: 22px;
+}
+
+input:disabled {
+	color: #B1663C;
 }
 
 /* PAGE LOGIN ***********************************  */

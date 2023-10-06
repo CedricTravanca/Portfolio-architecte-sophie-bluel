@@ -116,35 +116,38 @@ fetch("http://localhost:5678/api/categories")
 
     })
 
-// Récupération des travaux qui vont apparaitre sans avoir cliquer sur les boutons de tri
-fetch("http://localhost:5678/api/works")
-    .then(response => response.json())
-    .then(data => {
-        console.log(data)
+function showWorks() {
+    // Récupération des travaux qui vont apparaitre sans avoir cliquer sur les boutons de tri
+    fetch("http://localhost:5678/api/works")
+        .then(response => response.json())
+        .then(data => {
+            console.log(data)
 
-        //on parcours la liste des éléments id présents dans data
-        for (let id in data) {
-            let object = data[id]
+            //on parcours la liste des éléments id présents dans data
+            for (let id in data) {
+                let object = data[id]
 
-            //Création d'une balise figure qui contiendras l'image et sa description
-            let figElement = document.createElement("figure")
+                //Création d'une balise figure qui contiendras l'image et sa description
+                let figElement = document.createElement("figure")
 
-            let imgElement = document.createElement("img")
-            imgElement.src = object.imageUrl
-            imgElement.alt = object.title
+                let imgElement = document.createElement("img")
+                imgElement.src = object.imageUrl
+                imgElement.alt = object.title
 
-            let figCaptionElement = document.createElement("figCaption")
-            figCaptionElement.textContent = object.title
+                let figCaptionElement = document.createElement("figCaption")
+                figCaptionElement.textContent = object.title
 
 
-            figElement.appendChild(imgElement)
-            figElement.appendChild(figCaptionElement)
+                figElement.appendChild(imgElement)
+                figElement.appendChild(figCaptionElement)
 
-            //l'ensemble des éléments crées dans figElement vont être placés dans ma div gallery et se nommerons travaux
-            let travaux = document.querySelector(".gallery")
-            travaux.appendChild(figElement)
-        }
-    })
+                //l'ensemble des éléments crées dans figElement vont être placés dans ma div gallery et se nommerons travaux
+                let travaux = document.querySelector(".gallery")
+                travaux.appendChild(figElement)
+            }
+        })
+}
+showWorks()
 
 
 headband = document.querySelector(".black-headband")
@@ -224,6 +227,7 @@ const openModal2 = function (e) {
     target.removeAttribute("aria-hidden")
     modal2 = target
     modal2.querySelector(".js-modal-close").addEventListener("click", closeModal2)
+    //disableValidation()
 }
 
 const closeModal2 = function (e) {
@@ -240,7 +244,7 @@ let clickModal2 = document.getElementById("open-modal2")
 clickModal2.addEventListener("click", openModal2)
 
 let backToModal = document.querySelector(".fa-arrow-left")
-backToModal.addEventListener("click",closeModal2)
+backToModal.addEventListener("click", closeModal2)
 
 window.addEventListener("keydown", function (e) {
     if (e.key === "Escape" || e.key === "Esc") {
@@ -248,40 +252,39 @@ window.addEventListener("keydown", function (e) {
     }
 })
 
-chevronCategories = document.querySelector(".fa-chevron-down")
-chevronCategories.addEventListener("click", function (){
-    console.log("chevron")
-    
+function addCategorieToSelect() {
     fetch("http://localhost:5678/api/categories")
-    .then(response => response.json())
-    .then(data => {
-    for (let id in data) {
-    let category = data[id]
-    console.log(category.name)
-    
-let options = document.createElement("option")
+        .then(response => response.json())
+        .then(data => {
+            for (let id in data) {
+                let category = data[id]
+                console.log(category.name)
 
-    options.textContent = category.name
-    options.innerHtml = category.name
-    console.log("ok")
-    inputCategorie = document.getElementById("categorie")
-    inputCategorie.appendChild(option)
-}})
+                let options = document.createElement("option")
 
-})
+                options.textContent = category.name
+                options.value = category.id
+                inputCategorie = document.getElementById("categorie")
+                inputCategorie.appendChild(options)
+            }
+        })
+}
 
+addCategorieToSelect()
 
 
 function deleteImg(event) {
     console.log(event.target.id)
-    fetch(`http://localhost:5678/api/works/${event.target.id}`,{
-        method: `DELETE`, 
-        headers: {"Authorization": "Bearer "+localStorage.getItem("tokenIdentification")},      
+    fetch(`http://localhost:5678/api/works/${event.target.id}`, {
+        method: `DELETE`,
+        headers: { "Authorization": "Bearer " + localStorage.getItem("tokenIdentification") },
+    }).then(() => {
+        document.querySelector(".modal-img").innerHTML = "";
+        document.querySelector(".gallery").innerHTML = "";
+        showWorks()
+        loadImgModal()
     })
-    document.querySelector(".modal-img").innerHTML = "";
-    document.querySelector(".gallery").innerHTML = "";
-    loadWorks()
-    loadImgModal()
+
 }
 
 
@@ -289,41 +292,58 @@ loadImgModal()
 
 async function loadImgModal() {
     response = await fetch("http://localhost:5678/api/works")
-    .then(response => response.json())
-    .then(data => {
+        .then(response => response.json())
+        .then(data => {
 
-        //on parcours la liste des éléments id présents dans data
-        for (let id in data) {
-            let object = data[id]
+            //on parcours la liste des éléments id présents dans data
+            for (let id in data) {
+                let object = data[id]
 
-            //Création d'une balise figure qui contiendras l'image et sa description
-            let figElement = document.createElement("figure")
+                //Création d'une balise figure qui contiendras l'image et sa description
+                let figElement = document.createElement("figure")
 
-            let imgElement = document.createElement("img")
-            imgElement.src = object.imageUrl
-            imgElement.alt = object.title
+                let imgElement = document.createElement("img")
+                imgElement.src = object.imageUrl
+                imgElement.alt = object.title
 
-            //Création bouton poubelle sur les photos de la modal
-            let poubelle = document.createElement('i')
+                //Création bouton poubelle sur les photos de la modal
+                let poubelle = document.createElement('i')
 
-            poubelle.className = "fa-solid fa-trash-can"
-            poubelle.id = object.id
-        
-            //fonction deleteImg pour le click sur la corbeille
-            figElement.appendChild(poubelle)
-            poubelle.addEventListener("click",function (event) {
-               deleteImg(event)
-            })
+                poubelle.className = "fa-solid fa-trash-can"
+                poubelle.id = object.id
 
-            let figCaptionElement = document.createElement("figCaption")
-            figCaptionElement.textContent = object.title
+                //fonction deleteImg pour le click sur la corbeille
+                figElement.appendChild(poubelle)
+                poubelle.addEventListener("click", function (event) {
+                    deleteImg(event)
+                })
 
-            figElement.appendChild(imgElement)
+                let figCaptionElement = document.createElement("figCaption")
+                figCaptionElement.textContent = object.title
 
-            //l'ensemble des éléments crées dans figElement vont être placés dans la div modal-img et se nommerons travaux
-            let travaux = document.querySelector(".modal-img")
-            travaux.appendChild(figElement)
+                figElement.appendChild(imgElement)
 
-        }
-    })
+                //l'ensemble des éléments crées dans figElement vont être placés dans la div modal-img et se nommerons travaux
+                let travaux = document.querySelector(".modal-img")
+                travaux.appendChild(figElement)
+
+            }
+        })
 }
+/*
+let textNewImg = document.getElementById("titre")
+let catNewImg = document.getElementById("categorie")
+let btnValiderNewImg = document.getElementById("valider-nouvelle-img")
+
+btnValiderNewImg.disabled = false
+
+function disableValidation() {
+    if (textNewImg.value !=='' && catNewImg.value !=='') {
+        btnValiderNewImg.disabled = false
+    }
+    else {
+        btnValiderNewImg.disabled = true
+    }
+}
+
+*/
