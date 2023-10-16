@@ -3,8 +3,8 @@ let isConnect = false
 console.log(isConnect)
 
 // si le token n'est pas vide, nous pouvons acceder à la page
-console.log(localStorage.getItem("tokenIdentification"))
-if (localStorage.getItem("tokenIdentification") != null) {
+console.log(sessionStorage.getItem("tokenIdentification"))
+if (sessionStorage.getItem("tokenIdentification") != null) {
     //   window.location.href = "http://127.0.0.1:5500"
     isConnect = true
     console.log(isConnect)
@@ -168,7 +168,7 @@ if (isConnect == true) {
     logoutId.id = "logout"
     deleteTokenStorage = document.getElementById("logout")
     deleteTokenStorage.addEventListener("click", function () {
-        localStorage.removeItem("tokenIdentification")
+        sessionStorage.removeItem("tokenIdentification")
         window.location.href = "http://127.0.0.1:5500/index.html"
     })
 
@@ -227,6 +227,7 @@ const openModal2 = function (e) {
     target.removeAttribute("aria-hidden")
     modal2 = target
     modal2.querySelector(".js-modal-close").addEventListener("click", closeModal2)
+    checkForm()
     //disableValidation()
 }
 
@@ -277,7 +278,7 @@ function deleteImg(event) {
     console.log(event.target.id)
     fetch(`http://localhost:5678/api/works/${event.target.id}`, {
         method: `DELETE`,
-        headers: { "Authorization": "Bearer " + localStorage.getItem("tokenIdentification") },
+        headers: { "Authorization": "Bearer " + sessionStorage.getItem("tokenIdentification") },
     }).then(() => {
         document.querySelector(".modal-img").innerHTML = "";
         document.querySelector(".gallery").innerHTML = "";
@@ -330,20 +331,83 @@ async function loadImgModal() {
             }
         })
 }
-/*
-let textNewImg = document.getElementById("titre")
-let catNewImg = document.getElementById("categorie")
-let btnValiderNewImg = document.getElementById("valider-nouvelle-img")
 
-btnValiderNewImg.disabled = false
 
-function disableValidation() {
-    if (textNewImg.value !=='' && catNewImg.value !=='') {
-        btnValiderNewImg.disabled = false
-    }
-    else {
-        btnValiderNewImg.disabled = true
+
+let btnValiderNouvelleImg = document.getElementById("form")
+btnValiderNouvelleImg.addEventListener("submit", function (event) {
+    event.preventDefault()
+    loadNewWorks()
+})
+
+async function loadNewWorks() {
+    let newImgCat = document.getElementById("categorie").value
+    let newImgTitle = document.getElementById("titre").value
+    let newImgImage = document.getElementById("id-input").files[0]
+    console.log(newImgCat)
+    console.log(newImgTitle)
+    console.log(newImgImage)
+    const formData = new FormData()
+    formData.append("image", newImgImage)
+    formData.append("title", newImgTitle)
+    formData.append("category", newImgCat)
+    const response = await fetch('http://localhost:5678/api/works/', {
+        method: 'POST',
+        headers: {
+            //'Accept': 'multipart/formData',
+            'Authorization': 'Bearer ' + sessionStorage.getItem("tokenIdentification")
+        },
+        body: formData
+    }).catch(err => console.log(err))
+    if (response.ok === true) {
+        document.querySelector(".modal-img").innerHTML = "";
+        document.querySelector(".gallery").innerHTML = "";
+        showWorks()
+        loadImgModal()
+        closeModal2()
+
+    } else {
+        //throw new Error("une erreur est survenue")
+        //console.log(response)
     }
 }
 
-*/
+function showPreview(event) {
+    if(event.target.files.length > 0) {
+        let src = URL.createObjectURL(event.target.files[0])
+        let preview = document.getElementById("preview-new-image")
+        preview.src = src
+        preview.style.display = "block"
+        let champAjoutImg = document.getElementById("btn-add-img")
+        let champSize = document.querySelector(".max-size-img")
+        champAjoutImg.style.display = "none"
+        champSize.style.display = "none"
+        let champLogo = document.querySelector(".fa-regular.fa-image")
+        champLogo.style.display = "none"
+    }
+}
+
+let newImgTitle = document.getElementById("titre")
+let newImgCat = document.getElementById("categorie")
+let newImgImage = document.getElementById("id-input")
+
+newImgTitle.addEventListener("change", checkForm)
+newImgCat.addEventListener("change", checkForm)
+newImgImage.addEventListener("change", checkForm)
+
+function checkForm() {
+    let newImgCat = document.getElementById("categorie").value
+    let newImgTitle = document.getElementById("titre").value
+    let newImgImage = document.getElementById("id-input").value
+    
+    btnValiderNouvelleImg= document.getElementById("valider-nouvelle-img")
+    if (newImgTitle !== '' && newImgCat !== '' && newImgImage !== '') {
+        console.log(newImgTitle.value)
+        btnValiderNouvelleImg.disabled = false;
+    } 
+    else {
+        console.log("vide")
+        btnValiderNouvelleImg.disabled = true;
+    }
+}
+
