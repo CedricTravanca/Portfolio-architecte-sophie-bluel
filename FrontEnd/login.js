@@ -1,5 +1,5 @@
 // si le token n'est pas vide, nous pouvons acceder à la page
-if (localStorage.getItem("tokenIdentification") != null) {
+if (sessionStorage.getItem("tokenIdentification") != null) {
     window.location.href = "http://127.0.0.1:5500"
 }
 
@@ -28,7 +28,7 @@ formulaire.addEventListener("submit", (event) => {
             console.log(data)
 
             if (data.token != null) {
-                localStorage.setItem("tokenIdentification", data.token)
+                sessionStorage.setItem("tokenIdentification", data.token)
                 window.location.href = "http://127.0.0.1:5500"
                 console.log(data.token)
             }

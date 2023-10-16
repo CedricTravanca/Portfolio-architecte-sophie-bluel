@@ -402,6 +402,7 @@ button.add-img {
 	margin: 7px;
 	width: 237px;
 	height: 36px;
+	margin-bottom: 30px;
 }
 
 button.add-img a{
@@ -548,7 +549,15 @@ button.add-img a{
 }
 
 input:disabled {
-	color: #B1663C;
+	background-color: grey;
+}
+
+.preview-upload img {
+	height: auto;
+	width: auto;
+	max-width: 378px;
+	max-height: 167px;
+	
 }
 
 /* PAGE LOGIN ***********************************  */
