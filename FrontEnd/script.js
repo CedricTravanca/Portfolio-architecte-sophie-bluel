@@ -228,7 +228,6 @@ const openModal2 = function (e) {
     modal2 = target
     modal2.querySelector(".js-modal-close").addEventListener("click", closeModal2)
     checkForm()
-    //disableValidation()
 }
 
 const closeModal2 = function (e) {
@@ -241,11 +240,21 @@ const closeModal2 = function (e) {
     modal2 = null
 }
 
+function clearModal2() {
+    if (document.getElementById("titre").value != '' || document.getElementById("categorie").value != '' || document.getElementById("id-input").value != ''){
+        document.getElementById("categorie").value = ''
+        document.getElementById("titre").value=''
+        document.getElementById("id-input").value = ''
+    }
+}
+
 let clickModal2 = document.getElementById("open-modal2")
 clickModal2.addEventListener("click", openModal2)
+clickModal2.addEventListener("click", clearModal2)
 
 let backToModal = document.querySelector(".fa-arrow-left")
 backToModal.addEventListener("click", closeModal2)
+
 
 window.addEventListener("keydown", function (e) {
     if (e.key === "Escape" || e.key === "Esc") {
@@ -373,7 +382,7 @@ async function loadNewWorks() {
 }
 
 function showPreview(event) {
-    if(event.target.files.length > 0) {
+    if (event.target.files.length > 0) {
         let src = URL.createObjectURL(event.target.files[0])
         let preview = document.getElementById("preview-new-image")
         preview.src = src
@@ -399,14 +408,14 @@ function checkForm() {
     let newImgCat = document.getElementById("categorie").value
     let newImgTitle = document.getElementById("titre").value
     let newImgImage = document.getElementById("id-input").value
-    
-    btnValiderNouvelleImg= document.getElementById("valider-nouvelle-img")
+
+    btnValiderNouvelleImg = document.getElementById("valider-nouvelle-img")
     if (newImgTitle !== '' && newImgCat !== '' && newImgImage !== '') {
         console.log(newImgTitle.value)
         btnValiderNouvelleImg.disabled = false;
-    } 
+    }
     else {
-        console.log("vide")
+        console.log("un champ est vide")
         btnValiderNouvelleImg.disabled = true;
     }
 }
