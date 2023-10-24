@@ -5,9 +5,7 @@ console.log(isConnect)
 // si le token n'est pas vide, nous pouvons acceder à la page
 console.log(sessionStorage.getItem("tokenIdentification"))
 if (sessionStorage.getItem("tokenIdentification") != null) {
-    //   window.location.href = "http://127.0.0.1:5500"
     isConnect = true
-    console.log(isConnect)
 }
 
 // création boutton filtre "tous"
@@ -174,13 +172,12 @@ btnValiderNouvelleImg.addEventListener("submit", function (event) {
     loadNewWorks()
 })
 
-
-
-
+//selection des 3 champs pour le nouveau work 
 let newImgTitle = document.getElementById("titre")
 let newImgCat = document.getElementById("categorie")
 let newImgImage = document.getElementById("id-input")
 
+//a chaque changement nous verifions si un champ est vide dans le formulaire
 newImgTitle.addEventListener("change", checkForm)
 newImgCat.addEventListener("change", checkForm)
 newImgImage.addEventListener("change", checkForm)

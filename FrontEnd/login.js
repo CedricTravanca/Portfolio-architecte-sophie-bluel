@@ -35,8 +35,6 @@ formulaire.addEventListener("submit", (event) => {
             else {
                 alert("Identifiant ou mot de passe incorrect")
             }
-
         })
     })
-
 })
